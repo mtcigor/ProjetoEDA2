@@ -12,6 +12,8 @@
 
 
 int main() {
-
+	Grafo* grafo;
+	bool* resultado = false;
+	grafo = CriaGrafo(5, &resultado);
 	return 0;
 }
