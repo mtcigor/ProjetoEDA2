@@ -20,7 +20,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GestaoGrafo.c">
+    <ClCompile Include="GestaoGrafos.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

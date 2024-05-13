@@ -1,34 +1,51 @@
 /*****************************************************************//**
  * \file   Grafos.h
- * \brief  
+ * \brief  Ficheiro cabeçalho para gerir os grafos com lista de adjacências
  * 
- * \author mtcig
+ * \author Igor a27977@alunos.ipca.pt
  * \date   May 2024
  *********************************************************************/
 #pragma once
 
-#include <stdio.h>
 #include <stdbool.h>
 
-#define MAX 10
+/*
+*	
+*	CONSTRUÇÃO DO GRAFO E PLANEAMENTO DOS CAMINHOS 
+*  
+*	Segue-se com um grafo dirigido em que as linhas e colunas sejam um vértice si só 
+*	por exemplo na matriz do enunciado a 1º coluna e a 1º linha será um vértice por si só igual ao resto
+*	em que cada valor da matriz representa a aresta entre dois vértices sendo que o número em questão é o peso
+*	por exemplo se quero ir do vértice 1 para o vértice 2 o custo é 53 e do vértice 2 para o vértice 1 o custo já é de 497.
+*	
+*	Esta estrutura foi desenvolvida em lista de adjacências para representar um grafo dirigido e que suporta um
+*	número variável de vértices.
+* 
+*/
 
+/// <summary>
+/// Estrutura que define uma aresta
+/// </summary>
+typedef struct Aresta {
+	int id; //Identificação do próximo vértice que liga
+	int peso; //O custo de um vértice para outro vértice
+	struct Aresta* prox; //Próxima aresta que conecta ao vértice
+}Aresta;
+
+/// <summary>
+/// Estrutura que define um vértice
+/// </summary>
 typedef struct Vertice {
-	char label;
-	bool visited;       /*!< Controlar travessia do Grafo */
+	int id; //Identificação do vértice
+	bool visitado; //Se já foi visitado
+	Aresta* proxAresta; //Arestas que conecta o vértice para outro
+	struct Vertice* proxVertice; //Próximo vértice
 }Vertice;
 
-typedef struct Grafo
-{
-	Vertice* vertices;  //será array de vertices
-	int** adj;          //será matriz de adjacencias
+/// <summary>
+/// Estrutura que define um vértice
+/// </summary>
+typedef struct Grafo {
+	Vertice* inicioGrafo; //O primeiro vértice do grafo
+	int totVertices; //Número máximo de vértices
 }Grafo;
-
-
-//Funções do grafo
-void ShowArestas(int** adj, int nVertices);
-void ShowGraph(Vertice* lst, int** adj, int numVertices);
-int AddVertice(Vertice* lstVertices, int numVertices, char label);
-bool AddAresta(int** adj, int v1, int v2);
-int** CriaInicializaMatrizAdjacencias(int numVertices);
-Grafo* CriaGrafo(int numVertices, bool* res);
-void ProcessaVertice(Vertice* v);

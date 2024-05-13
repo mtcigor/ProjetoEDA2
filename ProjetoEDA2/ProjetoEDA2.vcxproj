@@ -131,9 +131,6 @@
     <ClCompile Include="Main.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Dados.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\GestaoGrafosLib\GestaoGrafosLib.vcxproj">
       <Project>{75f4bfd1-3d0f-45d2-9f7a-aead1534561c}</Project>
     </ProjectReference>
