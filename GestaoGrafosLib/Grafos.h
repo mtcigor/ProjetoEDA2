@@ -64,7 +64,7 @@ void DestroiAresta(Aresta* aresta);
 Aresta* NovaAresta(int idDestino);
 Aresta* EliminarAresta(Aresta* lista, int cod, bool* resultado);
 Aresta* ElimiminaAllArestas(Aresta* lista, bool* resultado);
-Aresta* InsereAresta(Aresta* lista, int idDestino);
+Aresta* InsereAresta(Aresta* lista,int peso, int idDestino);
 #pragma endregion
 #pragma region Assinatura Gestão Grafos
 void MostrarGrafoLA(Grafo* gr);
@@ -72,8 +72,8 @@ Grafo* CriaGrafo(int total);
 bool ExisteVerticeGrafo(Grafo* g, int idVertice);
 Vertice* OndeEstaVerticeGrafo(Grafo* g, int idVertice);
 Grafo* InsereVerticeGrafo(Grafo* g, Vertice* novo, int* resultado);
-Grafo* InsereAdjaGrafo(Grafo* g, int idOrigem, int idDestino, bool* resultado);
-Grafo* EliminaAdjGraph(Grafo* g, int origem, int destino, bool* resultado);
+Grafo* InsereArestaGrafo(Grafo* g, int idOrigem, int idDestino,int peso, bool* resultado);
+Grafo* EliminaAdjGrafo(Grafo* g, int origem, int destino, bool* resultado);
 #pragma endregion
 
 

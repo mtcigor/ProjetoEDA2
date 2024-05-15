@@ -111,7 +111,7 @@ Vertice* InserirVertice(Vertice* atual, Vertice* novo, bool* resultado) {
 	}
 
 	//Verifica se o vértice já existe
-	if (ExisteVertice(novo, novo->id)) {
+	if (ExisteVertice(atual, novo->id)) {
 		return atual;
 	}
 
@@ -157,7 +157,7 @@ Vertice* EliminaVertice(Vertice* atual, int cod, bool* resultado) {
 
 	if (antes == NULL) {
 		//apaga todas adjacencias do vertice a eliminar
-		aux->proxAresta = ElimiminaAllAdj(aux->proxAresta, resultado);
+		aux->proxAresta = ElimiminaAllArestas(aux->proxAresta, resultado);
 		if (*resultado == false) return atual;
 		atual = aux->proxVertice;
 	}
@@ -245,7 +245,7 @@ Aresta* ElimiminaAllArestas(Aresta* lista, bool* resultado) {
 	while (aux) {
 		if (aux)
 			lista = aux->prox;
-		AdjacentDestroy(aux);
+		DestroiAresta(aux);
 		aux = lista;
 	}
 	lista = NULL;
@@ -257,9 +257,10 @@ Aresta* ElimiminaAllArestas(Aresta* lista, bool* resultado) {
 /// 
 /// </summary>
 /// <param name="lista"></param>
+/// <param name="peso"></param>
 /// <param name="idDestino"></param>
 /// <returns></returns>
-Aresta* InsereAresta(Aresta* lista, int idDestino) {
+Aresta* InsereAresta(Aresta* lista,int peso, int idDestino) {
 	Aresta* novaAresta;
 	if ((novaAresta = NovaAresta(idDestino)) == NULL)
 	{
@@ -280,6 +281,7 @@ Aresta* InsereAresta(Aresta* lista, int idDestino) {
 		}
 		aux->prox = novaAresta;
 	}
+	novaAresta->peso = peso;
 	return lista;
 }
 #pragma endregion
@@ -354,16 +356,16 @@ Grafo* InsereVerticeGrafo(Grafo* g, Vertice* novo, int* resultado) {
 	g->inicioGrafo = InserirVertice(g->inicioGrafo, novo, resultado);
 	return g;
 }
-
 /// <summary>
 /// 
 /// </summary>
 /// <param name="g"></param>
 /// <param name="idOrigem"></param>
 /// <param name="idDestino"></param>
+/// <param name="peso"></param>
 /// <param name="resultado"></param>
 /// <returns></returns>
-Grafo* InsereAdjaGrafo(Grafo* g, int idOrigem, int idDestino, bool* resultado) {
+Grafo* InsereArestaGrafo(Grafo* g, int idOrigem, int idDestino, int peso, bool* resultado) {
 
 	*resultado = false;
 	//Validações
@@ -374,7 +376,7 @@ Grafo* InsereAdjaGrafo(Grafo* g, int idOrigem, int idDestino, bool* resultado) {
 	Vertice* destinyVertice = OndeEstaVerticeGrafo(g, idDestino);
 	if (!destinyVertice) return g;
 
-	originVertice->proxAresta = InsereAresta(originVertice->proxAresta, idDestino);
+	originVertice->proxAresta = InsereAresta(originVertice->proxAresta, peso, idDestino);
 
 	*resultado = true;
 	return g;
@@ -388,7 +390,7 @@ Grafo* InsereAdjaGrafo(Grafo* g, int idOrigem, int idDestino, bool* resultado) {
 /// <param name="destino"></param>
 /// <param name="resultado"></param>
 /// <returns></returns>
-Grafo* EliminaAdjGraph(Grafo* g, int origem, int destino, bool* resultado) {
+Grafo* EliminaAdjGrafo(Grafo* g, int origem, int destino, bool* resultado) {
 
 	*resultado = false;
 
@@ -400,9 +402,8 @@ Grafo* EliminaAdjGraph(Grafo* g, int origem, int destino, bool* resultado) {
 	Vertice* destinyVertice = OndeEstaVerticeGrafo(g, destino);
 	if (!destinyVertice) return g;
 
-	originVertice->proxAresta = ElimiminaAdj(originVertice->proxAresta, destino, resultado);
+	originVertice->proxAresta = EliminarAresta(originVertice->proxAresta, destino, resultado);
 	return g;
 }
 #pragma endregion
-
 
