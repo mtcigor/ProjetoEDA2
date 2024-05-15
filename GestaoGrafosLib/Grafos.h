@@ -27,7 +27,7 @@
 /// Estrutura que define uma aresta
 /// </summary>
 typedef struct Aresta {
-	int id; //Identificação do próximo vértice que liga
+	int idDestino; //Identificação do próximo vértice que liga
 	int peso; //O custo de um vértice para outro vértice
 	struct Aresta* prox; //Próxima aresta que conecta ao vértice
 }Aresta;
@@ -49,3 +49,33 @@ typedef struct Grafo {
 	Vertice* inicioGrafo; //O primeiro vértice do grafo
 	int totVertices; //Número máximo de vértices
 }Grafo;
+
+#pragma region Assinatura Gestão Vértices
+void DestroiVertice(Vertice* vertice);
+void MostrarGrafo(Vertice* grafo);
+Vertice* CriarVertice(int id);
+bool ExisteVertice(Vertice* inicio, int id);
+Vertice* GetVertice(Vertice* inicio, int id);
+Vertice* InserirVertice(Vertice* atual, Vertice* novo, bool* resultado);
+Vertice* EliminaVertice(Vertice* atual, int cod, bool* resultado);
+#pragma endregion
+#pragma region Assinatura Gestão Arestas
+void DestroiAresta(Aresta* aresta);
+Aresta* NovaAresta(int idDestino);
+Aresta* EliminarAresta(Aresta* lista, int cod, bool* resultado);
+Aresta* ElimiminaAllArestas(Aresta* lista, bool* resultado);
+Aresta* InsereAresta(Aresta* lista, int idDestino);
+#pragma endregion
+#pragma region Assinatura Gestão Grafos
+void MostrarGrafoLA(Grafo* gr);
+Grafo* CriaGrafo(int total);
+bool ExisteVerticeGrafo(Grafo* g, int idVertice);
+Vertice* OndeEstaVerticeGrafo(Grafo* g, int idVertice);
+Grafo* InsereVerticeGrafo(Grafo* g, Vertice* novo, int* resultado);
+Grafo* InsereAdjaGrafo(Grafo* g, int idOrigem, int idDestino, bool* resultado);
+Grafo* EliminaAdjGraph(Grafo* g, int origem, int destino, bool* resultado);
+#pragma endregion
+
+
+
+

@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ProjetoEDA2", "ProjetoEDA2\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GestaoGrafosLib", "GestaoGrafosLib\GestaoGrafosLib.vcxproj", "{75F4BFD1-3D0F-45D2-9F7A-AEAD1534561C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CarregarGrafoLib", "CarregarGrafoLib\CarregarGrafoLib.vcxproj", "{65106ABC-96FD-4C25-BB8F-BDBD5818ECC4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +33,14 @@ Global
 		{75F4BFD1-3D0F-45D2-9F7A-AEAD1534561C}.Release|x64.Build.0 = Release|x64
 		{75F4BFD1-3D0F-45D2-9F7A-AEAD1534561C}.Release|x86.ActiveCfg = Release|Win32
 		{75F4BFD1-3D0F-45D2-9F7A-AEAD1534561C}.Release|x86.Build.0 = Release|Win32
+		{65106ABC-96FD-4C25-BB8F-BDBD5818ECC4}.Debug|x64.ActiveCfg = Debug|x64
+		{65106ABC-96FD-4C25-BB8F-BDBD5818ECC4}.Debug|x64.Build.0 = Debug|x64
+		{65106ABC-96FD-4C25-BB8F-BDBD5818ECC4}.Debug|x86.ActiveCfg = Debug|Win32
+		{65106ABC-96FD-4C25-BB8F-BDBD5818ECC4}.Debug|x86.Build.0 = Debug|Win32
+		{65106ABC-96FD-4C25-BB8F-BDBD5818ECC4}.Release|x64.ActiveCfg = Release|x64
+		{65106ABC-96FD-4C25-BB8F-BDBD5818ECC4}.Release|x64.Build.0 = Release|x64
+		{65106ABC-96FD-4C25-BB8F-BDBD5818ECC4}.Release|x86.ActiveCfg = Release|Win32
+		{65106ABC-96FD-4C25-BB8F-BDBD5818ECC4}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
