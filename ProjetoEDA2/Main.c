@@ -23,7 +23,15 @@ int main() {
 	Vertice* vertice2 = CriarVertice(1);
 	grafo = InsereVerticeGrafo(grafo, vertice2, &resultadoInt);
 
-	grafo = InsereArestaGrafo(grafo, 0, 1,53, resultadoBool);
+	grafo = InsereArestaGrafo(grafo, 0, 1, 53, resultadoBool);
 	grafo = InsereArestaGrafo(grafo, 1, 0, 400, resultadoBool);
+	MostrarGrafo(grafo->inicioGrafo);
+	bool aux = ExisteVerticeGrafo(grafo, 1);
+	Vertice* verticeAux = OndeEstaVerticeGrafo(grafo, 1);
+	grafo = EliminaAdjGrafo(grafo, 1, 0, resultadoBool);
+	grafo = InsereArestaGrafo(grafo, 1, 0, 497, resultadoBool);
+	grafo = InsereArestaGrafo(grafo, 0, 1, 383, resultadoBool);
+	grafo = InsereArestaGrafo(grafo, 1, 0, 7, resultadoBool);
+
 	return 0;
 }

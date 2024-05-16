@@ -25,9 +25,9 @@ void DestroiVertice(Vertice* vertice) {
 /// <summary>
 /// 
 /// </summary>
-/// <param name="grafo"></param>
-void MostrarGrafo(Vertice* grafo) {
-	Vertice* atual = grafo;
+/// <param name="iniciografo"></param>
+void MostrarGrafo(Vertice* iniciografo) {
+	Vertice* atual = iniciografo;
 	while (atual != NULL) {
 		printf("%d:\n ", atual->id);
 		Aresta* atualAresta = atual->proxAresta;
