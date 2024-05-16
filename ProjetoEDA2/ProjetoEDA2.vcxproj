@@ -76,6 +76,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\mtcig\OneDrive - Instituto Politécnico do Cávado e do Ave\2º Semestre\Estruturas de Dados Avançadas\Trabalho Prático\Parte II\ProjetoEDA2\GestaoGrafosLib;C:\Users\mtcig\OneDrive - Instituto Politécnico do Cávado e do Ave\2º Semestre\Estruturas de Dados Avançadas\Trabalho Prático\Parte II\ProjetoEDA2\CarregarGrafoLib</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -90,6 +91,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\mtcig\OneDrive - Instituto Politécnico do Cávado e do Ave\2º Semestre\Estruturas de Dados Avançadas\Trabalho Prático\Parte II\ProjetoEDA2\GestaoGrafosLib;C:\Users\mtcig\OneDrive - Instituto Politécnico do Cávado e do Ave\2º Semestre\Estruturas de Dados Avançadas\Trabalho Prático\Parte II\ProjetoEDA2\CarregarGrafoLib</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -104,7 +106,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\mtcig\OneDrive - Instituto Politécnico do Cávado e do Ave\2º Semestre\Estruturas de Dados Avançadas\Trabalho Prático\Parte II\ProjetoEDA2\GestaoGrafosLib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\mtcig\OneDrive - Instituto Politécnico do Cávado e do Ave\2º Semestre\Estruturas de Dados Avançadas\Trabalho Prático\Parte II\ProjetoEDA2\GestaoGrafosLib;C:\Users\mtcig\OneDrive - Instituto Politécnico do Cávado e do Ave\2º Semestre\Estruturas de Dados Avançadas\Trabalho Prático\Parte II\ProjetoEDA2\CarregarGrafoLib</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -119,6 +121,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\mtcig\OneDrive - Instituto Politécnico do Cávado e do Ave\2º Semestre\Estruturas de Dados Avançadas\Trabalho Prático\Parte II\ProjetoEDA2\GestaoGrafosLib;C:\Users\mtcig\OneDrive - Instituto Politécnico do Cávado e do Ave\2º Semestre\Estruturas de Dados Avançadas\Trabalho Prático\Parte II\ProjetoEDA2\CarregarGrafoLib</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -131,6 +134,9 @@
     <ClCompile Include="Main.c" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CarregarGrafoLib\CarregarGrafoLib.vcxproj">
+      <Project>{65106abc-96fd-4c25-bb8f-bdbd5818ecc4}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\GestaoGrafosLib\GestaoGrafosLib.vcxproj">
       <Project>{75f4bfd1-3d0f-45d2-9f7a-aead1534561c}</Project>
     </ProjectReference>
