@@ -31,9 +31,7 @@ int MaiorLinhasOuColunas(const char *nomeFicheiro) {
     bool novaLinha = true;
 
     while ((c = fgetc(file)) != EOF) {
-        if (c == ';') {
-            colunasCorrente++;
-        }
+        if (c == ';') colunasCorrente++;
         else if (c == '\n') {
             colunasCorrente++; // Contar a última coluna antes do '\n'
             if (colunasCorrente > colunas) {
@@ -43,9 +41,7 @@ int MaiorLinhasOuColunas(const char *nomeFicheiro) {
             (linhas)++;
             novaLinha = true;
         }
-        else {
-            novaLinha = false;
-        }
+        else novaLinha = false;
     }
 
     // Contar a última linha, se não terminar com '\n'
@@ -110,4 +106,127 @@ Grafo* CarregarGrafo(const char* nomeFicheiro) {
     fclose(file);
     return grafo;
 }
+
+/// <summary>
+/// Guarda o grafo num ficheiro de texto com o separador ';'
+/// </summary>
+/// <param name="nomeFicheiro">Nome do ficheiro a guardar</param>
+/// <param name="grafo">Grafo em questão a guardar</param>
+/// <returns>Devolve um valor bool a indicar de guardou o ficheiro com sucesso ou não</returns>
+bool GuardarGrafo(const char* nomeFicheiro, Grafo* grafo) {
+	FILE* file = fopen(nomeFicheiro, "w");
+	if (file == NULL) return false;
+
+    int total = grafo->totVertices;
+    Vertice* vertice = grafo->inicioGrafo;
+
+    for (int i = 0; i < total; i++) { //Percorre os vértices
+        Aresta* aresta = vertice->proxAresta;
+        for (int j = 0; j < total; j++) { //Percorre as arestas
+            if (j == i) fprintf(file, ";");
+            fprintf(file, "%d", aresta->peso);
+            if (aresta->prox != NULL) { //Se a próxima aresta não for nula
+                fprintf(file, ";");
+                aresta = aresta->prox;
+            } 
+            else {
+                if (i + 1 == total) fprintf(file, ";"); //Se for o ultímo vértice adiciona um ';'
+                fprintf(file, "\n");
+                break;
+            } 
+        }
+        vertice = vertice->proxVertice;
+    }
+	fclose(file);
+	return true;
+}
+
+/// <summary>
+/// Função que guarda um grafo num ficheiro binário
+/// </summary>
+/// <param name="nomeFicheiro">Nome do ficheiro a guardar</param>
+/// <param name="grafo">Grafo a guardar</param>
+/// <returns>>Devolve um valor bool a indicar de guardou o ficheiro com sucesso ou não</returns>
+bool GuardarGrafoBinario(const char* nomeFicheiro, Grafo* grafo) {
+    FILE* file = fopen(nomeFicheiro, "wb");
+    if (file == NULL) return false;
+
+    // Escreve o número total de vértices
+    fwrite(&grafo->totVertices, sizeof(int), 1, file);
+
+    Vertice* verticeAtual = grafo->inicioGrafo;
+    while (verticeAtual != NULL) {
+
+        // Conta e escreve o número de arestas do vértice atual
+        int numArestas = 0;
+        Aresta* arestaAtual = verticeAtual->proxAresta;
+        while (arestaAtual != NULL) {
+            numArestas++;
+            arestaAtual = arestaAtual->prox;
+        }
+        fwrite(&numArestas, sizeof(int), 1, file);
+
+        // Escreve as arestas
+        arestaAtual = verticeAtual->proxAresta;
+        while (arestaAtual != NULL) {
+            fwrite(&arestaAtual->idDestino, sizeof(int), 1, file);
+            fwrite(&arestaAtual->peso, sizeof(int), 1, file);
+            arestaAtual = arestaAtual->prox;
+        }
+
+        verticeAtual = verticeAtual->proxVertice;
+    }
+
+    fclose(file);
+    return true;
+}
+
+/// <summary>
+/// Função para carregar um grafo de um ficheiro binário
+/// </summary>
+/// <param name="nomeFicheiro">Nome do ficheiro a guardar</param>
+/// <returns>Grafo gerado pelo ficheiro dado</returns>
+Grafo* CarregarGrafoBinario(const char* nomeFicheiro) {
+    FILE* file = fopen(nomeFicheiro, "rb");
+    if (file == NULL) return NULL;
+
+    int totVertices;
+    fread(&totVertices, sizeof(int), 1, file);
+
+    Grafo* grafo = CriaGrafo(totVertices);
+    if (grafo == NULL) {
+        fclose(file);
+        return NULL;
+    }
+    for (int i = 0; i < totVertices; i++) {
+        Vertice* vertice = CriarVertice(i);
+		int resultadoInt;
+		grafo = InsereVerticeGrafo(grafo, vertice, &resultadoInt);
+		if (resultadoInt == 0) {
+			fclose(file);
+			return NULL; // Falha na inserção do vértice
+		}
+    }
+    for (int i = 0; i < totVertices; i++) {
+        int numArestas;
+        fread(&numArestas, sizeof(int), 1, file);
+
+        for (int j = 0; j < numArestas; j++) {
+            int idDestino, peso;
+            fread(&idDestino, sizeof(int), 1, file);
+            fread(&peso, sizeof(int), 1, file);
+
+            bool resultadoBool;
+            grafo = InsereArestaGrafo(grafo, i, idDestino, peso, &resultadoBool);
+            if (!resultadoBool) {
+                fclose(file);
+                return NULL; // Falha na inserção da aresta
+            }
+        }
+    }
+
+    fclose(file);
+    return grafo;
+}
+
 

@@ -371,12 +371,12 @@ Grafo* InsereArestaGrafo(Grafo* g, int idOrigem, int idDestino, int peso, bool* 
 	//Validações
 	if (g == NULL) return NULL;
 	//Verificar se vertices existem
-	Vertice* originVertice = OndeEstaVerticeGrafo(g, idOrigem);
-	if (originVertice == NULL) return g;
-	Vertice* destinyVertice = OndeEstaVerticeGrafo(g, idDestino);
-	if (!destinyVertice) return g;
+	Vertice* origemVertice = OndeEstaVerticeGrafo(g, idOrigem);
+	if (origemVertice == NULL) return g;
+	Vertice* destinoVertice = OndeEstaVerticeGrafo(g, idDestino);
+	if (!destinoVertice) return g;
 
-	originVertice->proxAresta = InsereAresta(originVertice->proxAresta, peso, idDestino);
+	origemVertice->proxAresta = InsereAresta(origemVertice->proxAresta, peso, idDestino);
 
 	*resultado = true;
 	return g;

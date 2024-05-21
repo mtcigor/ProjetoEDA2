@@ -40,5 +40,10 @@ int main() {
 	Grafo* grafo2 = CarregarGrafo("grafo.txt");
 	MostrarGrafoLA(grafo2);
 
+	GuardarGrafo("teste.txt", grafo2);
+
+	GuardarGrafoBinario("teste.bin", grafo2);
+
+	Grafo* grafoBin = CarregarGrafoBinario("teste.bin");
 	return 0;
 }
