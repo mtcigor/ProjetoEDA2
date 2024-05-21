@@ -1,8 +1,8 @@
 /*****************************************************************//**
  * \file   CarregarGrafos.c
- * \brief  
+ * \brief  Funções para carregar e guardar grafos em ficheiros
  * 
- * \author mtcig
+ * \author Igor a27977@alunos.ipca.pt
  * \date   May 2024
  *********************************************************************/
 
@@ -15,12 +15,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-/// <summary>
+#pragma region Funções Aux
+ /// <summary>
 /// Contar as linhas e colunas de um ficheiro e verifica qual dos dois é o maior
 /// </summary>
 /// <param name="nomeFicheiro">Nome do ficheiro no diretório atual</param>
 /// <returns>Número inteiro maior</returns>
-int MaiorLinhasOuColunas(const char *nomeFicheiro) {
+int MaiorLinhasOuColunas(const char* nomeFicheiro) {
     FILE* file = fopen(nomeFicheiro, "r");
     if (file == NULL)  return -1;
 
@@ -59,7 +60,9 @@ int MaiorLinhasOuColunas(const char *nomeFicheiro) {
     else return colunas;
 
 }
+#pragma endregion
 
+#pragma region Texto
 /// <summary>
 /// Função para carregar os vértices e arestas para a memória de um ficheiro de texto com o separador ';'
 /// </summary>
@@ -114,8 +117,8 @@ Grafo* CarregarGrafo(const char* nomeFicheiro) {
 /// <param name="grafo">Grafo em questão a guardar</param>
 /// <returns>Devolve um valor bool a indicar de guardou o ficheiro com sucesso ou não</returns>
 bool GuardarGrafo(const char* nomeFicheiro, Grafo* grafo) {
-	FILE* file = fopen(nomeFicheiro, "w");
-	if (file == NULL) return false;
+    FILE* file = fopen(nomeFicheiro, "w");
+    if (file == NULL) return false;
 
     int total = grafo->totVertices;
     Vertice* vertice = grafo->inicioGrafo;
@@ -128,19 +131,21 @@ bool GuardarGrafo(const char* nomeFicheiro, Grafo* grafo) {
             if (aresta->prox != NULL) { //Se a próxima aresta não for nula
                 fprintf(file, ";");
                 aresta = aresta->prox;
-            } 
+            }
             else {
                 if (i + 1 == total) fprintf(file, ";"); //Se for o ultímo vértice adiciona um ';'
                 fprintf(file, "\n");
                 break;
-            } 
+            }
         }
         vertice = vertice->proxVertice;
     }
-	fclose(file);
-	return true;
+    fclose(file);
+    return true;
 }
+#pragma endregion
 
+#pragma region Binário
 /// <summary>
 /// Função que guarda um grafo num ficheiro binário
 /// </summary>
@@ -228,5 +233,4 @@ Grafo* CarregarGrafoBinario(const char* nomeFicheiro) {
     fclose(file);
     return grafo;
 }
-
-
+#pragma endregion
