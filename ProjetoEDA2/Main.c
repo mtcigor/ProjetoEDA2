@@ -6,12 +6,12 @@
  * \date   May 2024
  *********************************************************************/
 
-#include "Grafos.h"
-#include "CarregarGrafos.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "Grafos.h"
+#include "CarregarGrafos.h"
+#include "GrafoProcura.h"
 
 int main() {
 	/*Grafo *grafo = CriaGrafo(2);
@@ -43,7 +43,14 @@ int main() {
 	GuardarGrafo("teste.txt", grafo2);
 
 	GuardarGrafoBinario("teste.bin", grafo2);
-
 	Grafo* grafoBin = CarregarGrafoBinario("teste.bin");
+
+	int numCaminhos;
+	Caminho** caminhos = ObterTodosCaminhos(grafo2, 2, 0, &numCaminhos);
+
+	printf("\nCaminhos encontrados:\n");
+	for (int i = 0; i < numCaminhos; i++) {
+		ImprimeCaminho(caminhos[i]);
+	}
 	return 0;
 }

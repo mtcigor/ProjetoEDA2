@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GestaoGrafosLib", "GestaoGr
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CarregarGrafoLib", "CarregarGrafoLib\CarregarGrafoLib.vcxproj", "{65106ABC-96FD-4C25-BB8F-BDBD5818ECC4}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ProcuraCaminhosLib", "ProcuraCaminhosLib\ProcuraCaminhosLib.vcxproj", "{75E79D8B-EEE2-4F47-A069-518D9D702BFE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -41,6 +43,14 @@ Global
 		{65106ABC-96FD-4C25-BB8F-BDBD5818ECC4}.Release|x64.Build.0 = Release|x64
 		{65106ABC-96FD-4C25-BB8F-BDBD5818ECC4}.Release|x86.ActiveCfg = Release|Win32
 		{65106ABC-96FD-4C25-BB8F-BDBD5818ECC4}.Release|x86.Build.0 = Release|Win32
+		{75E79D8B-EEE2-4F47-A069-518D9D702BFE}.Debug|x64.ActiveCfg = Debug|x64
+		{75E79D8B-EEE2-4F47-A069-518D9D702BFE}.Debug|x64.Build.0 = Debug|x64
+		{75E79D8B-EEE2-4F47-A069-518D9D702BFE}.Debug|x86.ActiveCfg = Debug|Win32
+		{75E79D8B-EEE2-4F47-A069-518D9D702BFE}.Debug|x86.Build.0 = Debug|Win32
+		{75E79D8B-EEE2-4F47-A069-518D9D702BFE}.Release|x64.ActiveCfg = Release|x64
+		{75E79D8B-EEE2-4F47-A069-518D9D702BFE}.Release|x64.Build.0 = Release|x64
+		{75E79D8B-EEE2-4F47-A069-518D9D702BFE}.Release|x86.ActiveCfg = Release|Win32
+		{75E79D8B-EEE2-4F47-A069-518D9D702BFE}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
