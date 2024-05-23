@@ -24,10 +24,12 @@
 /// <param name="numCaminhos">Número de caminhos existentes</param>
 /// <param name="maxTamanho">Máximo de vértices por caminho</param>
 void EncontrarCaminhosDFS(Grafo* g, Vertice* verticeAtual, int idDestino, Caminho* caminhoAtual, Caminho** caminhos, int* numCaminhos, int maxTamanho) {
-	verticeAtual->visitado = true;
+	verticeAtual->visitado = true; //Vértice atual da função é visitado
 	AdicionaVerticeNoCaminho(caminhoAtual, verticeAtual->id);
 
+	//Caso o vértice atual seja o vértice de destino
 	if (verticeAtual->id == idDestino) {
+		//Inicializa um novo caminho para guardar o caminho atual no array de caminhos
 		Caminho* novoCaminho = (Caminho*)malloc(sizeof(Caminho));
 		InicializaCaminho(novoCaminho, maxTamanho);
 
@@ -35,13 +37,14 @@ void EncontrarCaminhosDFS(Grafo* g, Vertice* verticeAtual, int idDestino, Caminh
 			AdicionaVerticeNoCaminho(novoCaminho, caminhoAtual->vertices[i]);
 		}
 		novoCaminho->pesoTotal = caminhoAtual->pesoTotal;
-		caminhos[(*numCaminhos)++] = novoCaminho;
+		caminhos[(*numCaminhos)++] = novoCaminho; //Adiciona o caminho ao array de caminhos
 	}
 	else {
+		//Percorre as arestas do vértice atual
 		Aresta* arestaAtual = verticeAtual->proxAresta;
 		while (arestaAtual != NULL) {
 			Vertice* proxVertice = OndeEstaVerticeGrafo(g, arestaAtual->idDestino);
-			if (proxVertice != NULL && !proxVertice->visitado) {
+			if (proxVertice != NULL && !proxVertice->visitado) { //Caso o destino da aresta não tenha sido visitado
 				caminhoAtual->pesoTotal += arestaAtual->peso;
 				EncontrarCaminhosDFS(g, proxVertice, idDestino, caminhoAtual, caminhos, numCaminhos, maxTamanho);
 			}
@@ -49,6 +52,7 @@ void EncontrarCaminhosDFS(Grafo* g, Vertice* verticeAtual, int idDestino, Caminh
 		}
 	}
 
+	//Desmarca o vértice atual
 	verticeAtual->visitado = false;
 	caminhoAtual->tamanho--;
 	caminhoAtual->pesoTotal = 0;
@@ -63,19 +67,91 @@ void EncontrarCaminhosDFS(Grafo* g, Vertice* verticeAtual, int idDestino, Caminh
 /// <param name="numCaminhos">Números de caminhos a procurar</param>
 /// <returns>Array dinámica com todos os caminhos possíveis entre os dois vértices</returns>
 Caminho** ObterTodosCaminhos(Grafo* grafo, int idOrigem, int idDestino, int* numCaminhos) {
-	Vertice* verticeOrigem = GetVertice(grafo->inicioGrafo, idOrigem);
-	if (verticeOrigem == NULL) return NULL;
+    Vertice* verticeOrigem = GetVertice(grafo->inicioGrafo, idOrigem);
+    if (verticeOrigem == NULL) return NULL;
 
-	*numCaminhos = 0;
-	int maxTamanho = grafo->totVertices;
-	Caminho* caminhoAtual = (Caminho*)malloc(sizeof(Caminho));
-	InicializaCaminho(caminhoAtual, maxTamanho);
+    *numCaminhos = 0;
+    int maxTamanho = grafo->totVertices;
+	//Caminho auxiliar para guardar o caminho entre dois vértices antes de adicionar no array de caminhos
+    Caminho* caminhoAtual = (Caminho*)malloc(sizeof(Caminho));
+    InicializaCaminho(caminhoAtual, maxTamanho);
 
-	Caminho** caminhos = (Caminho**)malloc(grafo->totVertices * sizeof(Caminho*));
-	EncontrarCaminhosDFS(grafo, verticeOrigem, idDestino, caminhoAtual, caminhos, numCaminhos, maxTamanho);
+	//Array dinâmica para guardar todos os caminhos possíveis entre dois vértices
+    Caminho** caminhos = (Caminho**)malloc(grafo->totVertices * sizeof(Caminho*));
+    EncontrarCaminhosDFS(grafo, verticeOrigem, idDestino, caminhoAtual, caminhos, numCaminhos, maxTamanho);
 
-	LiberaCaminho(caminhoAtual);
-	free(caminhoAtual);
+	//Libertar memória alocada para o caminho auxiliar
+    LiberaCaminho(caminhoAtual);
+    free(caminhoAtual);
 
-	return caminhos;
+    return caminhos;
+}
+
+/// <summary>
+/// Função para obter todos os caminhos entre todos os pares de vértices
+/// </summary>
+/// <param name="grafo">Grafo para obter todos os caminhos</param>
+/// <param name="numCaminhos">Números de caminhos a procurar entre dois vértices</param>
+/// <returns>Array dinámica com todos os caminhos possíveis de todos os vértices na origem e destino</returns>
+TodosCaminhos* ObterTodosCaminhosGrafo(Grafo* grafo, int* numCaminhos) {
+	TodosCaminhos* todosCaminhos = (TodosCaminhos*)malloc(grafo->totVertices * sizeof(TodosCaminhos));
+	if (todosCaminhos == NULL) return NULL;
+
+	//Percorre por vértices origem
+	for (int i = 0; i < grafo->totVertices; i++) {
+		//Inicializa a estrutura de todos os caminhos
+		todosCaminhos[i].verticeOrigem = i;
+		todosCaminhos[i].numCaminhos = 0;
+		todosCaminhos[i].caminhos = (Caminho**)malloc(grafo->totVertices * sizeof(Caminho*));
+
+		//Percorre os vértices destinos do vértice origem
+		for (int k = 0; k < grafo->totVertices; k++) { 
+			if (i == k) continue;
+			int numCaminhosTemp;
+			Caminho** caminhos = ObterTodosCaminhos(grafo, i, k, &numCaminhosTemp);
+			for (int j = 0; j < numCaminhosTemp; j++) {
+				todosCaminhos[i].caminhos[todosCaminhos[i].numCaminhos++] = caminhos[j];
+			}
+			free(caminhos);
+		}
+	}
+
+	*numCaminhos = grafo->totVertices;
+	return todosCaminhos;
+}
+
+/// <summary>
+/// Função para encontrar o caminho com maior Peso entre todos os caminhos encontrados
+/// </summary>
+/// <param name="todosCaminhos">Estrutura que contêm todos os caminhos encontrados</param>
+/// <param name="numCaminhos">Número de caminhos entre dois vértices</param>
+/// <returns>Caminho com maior peso</returns>
+MelhoresCaminhos* MelhorCaminho(TodosCaminhos* todosCaminhos, int numCaminhos) {
+	//Aloca memória para a estrutura de melhores caminhos
+	MelhoresCaminhos* melhoresCaminhos = (MelhoresCaminhos*)malloc(sizeof(MelhoresCaminhos));
+	melhoresCaminhos->caminhos = (Caminho**)malloc(numCaminhos * sizeof(Caminho*));
+	melhoresCaminhos->numMelhoresCaminhos = 0;
+
+	//Inicializa o melhor caminho com o primeiro caminho encontrado
+	Caminho* melhorCaminho = todosCaminhos[0].caminhos[0];
+	int pesoMaximo = melhorCaminho->pesoTotal;
+	melhoresCaminhos->caminhos[0] = melhorCaminho;
+	melhoresCaminhos->numMelhoresCaminhos = 1;
+
+	//Procura o caminho com maior peso todos os vértices destinos
+	for (int i = 0; i < numCaminhos; i++) { 
+		for (int j = 0; j < todosCaminhos[i].numCaminhos; j++) { 
+			Caminho* caminhoAtual = todosCaminhos[i].caminhos[j];
+			if (caminhoAtual->pesoTotal > pesoMaximo) { //Se o peso do caminho atual for maior que o peso máximo
+				pesoMaximo = caminhoAtual->pesoTotal;
+				melhoresCaminhos->numMelhoresCaminhos = 0;
+				melhoresCaminhos->caminhos[melhoresCaminhos->numMelhoresCaminhos++] = caminhoAtual;
+			}
+			else if (caminhoAtual->pesoTotal == pesoMaximo) { //Caso o peso do caminho atual seja igual ao peso máximo
+				melhoresCaminhos->caminhos[melhoresCaminhos->numMelhoresCaminhos++] = caminhoAtual;
+			}
+		}
+	}
+
+	return melhoresCaminhos;
 }
