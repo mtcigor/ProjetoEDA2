@@ -30,9 +30,11 @@ void EncontrarCaminhosDFS(Grafo* g, Vertice* verticeAtual, int idDestino, Caminh
 	if (verticeAtual->id == idDestino) {
 		Caminho* novoCaminho = (Caminho*)malloc(sizeof(Caminho));
 		InicializaCaminho(novoCaminho, maxTamanho);
+
 		for (int i = 0; i < caminhoAtual->tamanho; i++) {
 			AdicionaVerticeNoCaminho(novoCaminho, caminhoAtual->vertices[i]);
 		}
+		novoCaminho->pesoTotal = caminhoAtual->pesoTotal;
 		caminhos[(*numCaminhos)++] = novoCaminho;
 	}
 	else {
@@ -40,6 +42,7 @@ void EncontrarCaminhosDFS(Grafo* g, Vertice* verticeAtual, int idDestino, Caminh
 		while (arestaAtual != NULL) {
 			Vertice* proxVertice = OndeEstaVerticeGrafo(g, arestaAtual->idDestino);
 			if (proxVertice != NULL && !proxVertice->visitado) {
+				caminhoAtual->pesoTotal += arestaAtual->peso;
 				EncontrarCaminhosDFS(g, proxVertice, idDestino, caminhoAtual, caminhos, numCaminhos, maxTamanho);
 			}
 			arestaAtual = arestaAtual->prox;
@@ -48,6 +51,7 @@ void EncontrarCaminhosDFS(Grafo* g, Vertice* verticeAtual, int idDestino, Caminh
 
 	verticeAtual->visitado = false;
 	caminhoAtual->tamanho--;
+	caminhoAtual->pesoTotal = 0;
 }
 
 /// <summary>

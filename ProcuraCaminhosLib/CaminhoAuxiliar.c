@@ -17,6 +17,7 @@
 /// <param name="maxTamanho">Tamanho máximo do caminho</param>
 void InicializaCaminho(Caminho* caminho, int maxTamanho) {
     caminho->vertices = (int*)malloc(maxTamanho * sizeof(int));
+    caminho->pesoTotal = 0;
     caminho->tamanho = 0;
 }
 
@@ -45,5 +46,5 @@ void ImprimeCaminho(Caminho* caminho) {
     for (int i = 0; i < caminho->tamanho; i++) {
         printf("%d ", caminho->vertices[i]);
     }
-    printf("\n");
+    printf("\n Peso: %d\n", caminho->pesoTotal);
 }
