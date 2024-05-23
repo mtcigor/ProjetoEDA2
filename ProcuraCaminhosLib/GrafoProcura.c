@@ -93,7 +93,7 @@ Caminho** ObterTodosCaminhos(Grafo* grafo, int idOrigem, int idDestino, int* num
 /// <param name="grafo">Grafo para obter todos os caminhos</param>
 /// <param name="numCaminhos">Números de caminhos a procurar entre dois vértices</param>
 /// <returns>Array dinámica com todos os caminhos possíveis de todos os vértices na origem e destino</returns>
-TodosCaminhos* ObterTodosCaminhosGrafo(Grafo* grafo, int* numCaminhos) {
+TodosCaminhos* ObterTodosCaminhosGrafo(static Grafo* grafo, int* numCaminhos) {
 	TodosCaminhos* todosCaminhos = (TodosCaminhos*)malloc(grafo->totVertices * sizeof(TodosCaminhos));
 	if (todosCaminhos == NULL) return NULL;
 
@@ -112,7 +112,8 @@ TodosCaminhos* ObterTodosCaminhosGrafo(Grafo* grafo, int* numCaminhos) {
 			for (int j = 0; j < numCaminhosTemp; j++) {
 				todosCaminhos[i].caminhos[todosCaminhos[i].numCaminhos++] = caminhos[j];
 			}
-			free(caminhos);
+			printf("\n%d\n", todosCaminhos[i].numCaminhos);
+			//free(caminhos);
 		}
 	}
 
