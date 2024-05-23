@@ -11,9 +11,9 @@
 #include <stdio.h>
 
 /// <summary>
-/// 
+/// Função para libertar a memória para a estrutura melhores caminhos
 /// </summary>
-/// <param name="melhoresCaminhos"></param>
+/// <param name="melhoresCaminhos">Endereço da estrutura melhoresCaminhos</param>
 void LiberaMelhoresCaminhos(MelhoresCaminhos* melhoresCaminhos) {
     free(melhoresCaminhos->caminhos);
     free(melhoresCaminhos);
