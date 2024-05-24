@@ -67,7 +67,7 @@ void EncontrarCaminhosDFS(Grafo* g, Vertice* verticeAtual, int idDestino, Caminh
 /// <param name="numCaminhos">Números de caminhos a procurar</param>
 /// <returns>Array dinámica com todos os caminhos possíveis entre os dois vértices</returns>
 Caminho** ObterTodosCaminhos(Grafo* grafo, int idOrigem, int idDestino, int* numCaminhos) {
-    Vertice* verticeOrigem = GetVertice(grafo->inicioGrafo, idOrigem);
+	Vertice* verticeOrigem = OndeEstaVerticeGrafo(grafo, idOrigem);
     if (verticeOrigem == NULL) return NULL;
 
     *numCaminhos = 0;
@@ -93,27 +93,36 @@ Caminho** ObterTodosCaminhos(Grafo* grafo, int idOrigem, int idDestino, int* num
 /// <param name="grafo">Grafo para obter todos os caminhos</param>
 /// <param name="numCaminhos">Números de caminhos a procurar entre dois vértices</param>
 /// <returns>Array dinámica com todos os caminhos possíveis de todos os vértices na origem e destino</returns>
-TodosCaminhos* ObterTodosCaminhosGrafo(static Grafo* grafo, int* numCaminhos) {
+TodosCaminhos* ObterTodosCaminhosGrafo(Grafo* grafo, int* numCaminhos) {
 	TodosCaminhos* todosCaminhos = (TodosCaminhos*)malloc(grafo->totVertices * sizeof(TodosCaminhos));
 	if (todosCaminhos == NULL) return NULL;
 
-	//Percorre por vértices origem
 	for (int i = 0; i < grafo->totVertices; i++) {
-		//Inicializa a estrutura de todos os caminhos
 		todosCaminhos[i].verticeOrigem = i;
 		todosCaminhos[i].numCaminhos = 0;
-		todosCaminhos[i].caminhos = (Caminho**)malloc(grafo->totVertices * sizeof(Caminho*));
+		todosCaminhos[i].caminhos = NULL;
 
-		//Percorre os vértices destinos do vértice origem
-		for (int k = 0; k < grafo->totVertices; k++) { 
+		for (int k = 0; k < grafo->totVertices; k++) {
 			if (i == k) continue;
 			int numCaminhosTemp;
 			Caminho** caminhos = ObterTodosCaminhos(grafo, i, k, &numCaminhosTemp);
-			for (int j = 0; j < numCaminhosTemp; j++) {
-				todosCaminhos[i].caminhos[todosCaminhos[i].numCaminhos++] = caminhos[j];
+			if (caminhos != NULL) {
+				Caminho** caminhoPointer = (Caminho**)realloc(todosCaminhos[i].caminhos, (todosCaminhos[i].numCaminhos + numCaminhosTemp) * sizeof(Caminho*));
+				if (caminhoPointer == NULL) {
+					// Se realloc falhar, libere a memória alocada e retorne NULL
+					for (int j = 0; j <= i; j++) {
+						LiberaCaminhos(todosCaminhos[j].caminhos, todosCaminhos[j].numCaminhos);
+					}
+					free(todosCaminhos);
+					return NULL;
+				}
+				todosCaminhos[i].caminhos = caminhoPointer;
+				for (int j = 0; j < numCaminhosTemp; j++) {
+					todosCaminhos[i].caminhos[todosCaminhos[i].numCaminhos + j] = caminhos[j];
+				}
+				todosCaminhos[i].numCaminhos += numCaminhosTemp;
+				//free(caminhos);
 			}
-			printf("\n%d\n", todosCaminhos[i].numCaminhos);
-			//free(caminhos);
 		}
 	}
 
