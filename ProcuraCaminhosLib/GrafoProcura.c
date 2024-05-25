@@ -121,7 +121,6 @@ TodosCaminhos* ObterTodosCaminhosGrafo(Grafo* grafo, int* numCaminhos) {
 					todosCaminhos[i].caminhos[todosCaminhos[i].numCaminhos + j] = caminhos[j];
 				}
 				todosCaminhos[i].numCaminhos += numCaminhosTemp;
-				//free(caminhos);
 			}
 		}
 	}

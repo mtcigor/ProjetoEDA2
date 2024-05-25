@@ -27,27 +27,36 @@
 /// Estrutura que define uma aresta
 /// </summary>
 typedef struct Aresta {
-	int idDestino; //Identificação do próximo vértice que liga
-	int peso; //O custo de um vértice para outro vértice
-	struct Aresta* prox; //Próxima aresta que conecta ao vértice
+	/// Identificação do próximo vértice que liga
+	int idDestino; 
+	/// O custo de um vértice para outro vértice
+	int peso;
+	/// Próxima aresta que conecta ao vértice
+	struct Aresta* prox; 
 }Aresta;
 
 /// <summary>
 /// Estrutura que define um vértice
 /// </summary>
 typedef struct Vertice {
-	int id; //Identificação do vértice
-	bool visitado; //Se já foi visitado
-	Aresta* proxAresta; //Arestas que conecta o vértice para outro
-	struct Vertice* proxVertice; //Próximo vértice
+	/// Identificação do vértice
+	int id; 
+	/// Se já foi visitado
+	bool visitado; 
+	/// Arestas que conecta o vértice para outro
+	Aresta* proxAresta;
+	/// Próximo vértice
+	struct Vertice* proxVertice; 
 }Vertice;
 
 /// <summary>
 /// Estrutura que define um vértice
 /// </summary>
 typedef struct Grafo {
-	Vertice* inicioGrafo; //O primeiro vértice do grafo
-	int totVertices; //Número máximo de vértices
+	/// O primeiro vértice do grafo
+	Vertice* inicioGrafo; 
+	/// Número máximo de vértices
+	int totVertices; 
 }Grafo;
 
 #pragma region Assinatura Gestão Vértices
