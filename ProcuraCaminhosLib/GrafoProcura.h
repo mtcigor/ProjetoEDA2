@@ -13,8 +13,11 @@
 /// Estrutura que representa um caminho entre dois vértices
 /// </summary>
 typedef struct Caminho {
+    /// Array dinámica com os vértices do caminho
     int* vertices;
+    /// Tamanho do array de vértices
     int tamanho;
+    /// Peso total do caminho
     int pesoTotal;
 } Caminho;
 
@@ -22,16 +25,21 @@ typedef struct Caminho {
 /// Estrutura que representa todos os caminhos de um grafo
 /// </summary>
 typedef struct TodosCaminhos{
+    /// Variável que indentifica qual o vértice de origem de todos os caminhos
     int verticeOrigem;
+    /// Array de um Array dinámica com todos os caminhos possíveis entre dois vértices
 	Caminho** caminhos;
+    /// Número de caminhos existentes
 	int numCaminhos;
 } TodosCaminhos;
 
 /// <summary>
 /// Estrutura que representa os melhores caminhos entre dois vértices
 /// </summary>
-typedef struct {
+typedef struct MelhoresCaminhos{
+    /// Array dinámica com os melhores caminhos entre dois vértices
     Caminho** caminhos;
+    /// Número de melhores caminhos
     int numMelhoresCaminhos;
 } MelhoresCaminhos;
 
